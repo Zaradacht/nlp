@@ -203,12 +203,12 @@ def perplexity(text, model_counts, score_function, **scoring_parameters):
     prob = 1
     num_predictions = len(n_grams)
     for n_gram in n_grams:
-        if n_gram[:-1] not in model_counts.keys() or n_gram[-1] not in model_counts[n_gram[:-1]].keys():
+        if not score_function(model_counts, n_gram, **scoring_parameters):
             return float('inf')
         else:
             prob *= 1 / score_function(model_counts, n_gram, **scoring_parameters)
     ppl = prob ** (1 / num_predictions)
-    return ppl  # TODO MLE??? only
+    return ppl
 
 
 def generate_text_mle(model_counts):
@@ -282,7 +282,6 @@ def generate_text_smoothed(model_counts, delta, vocab):
     sentence = sentence[context_length:-1]
     return sentence
 
-########################################################################################################################
 
 def replace_oovs(vocab, data, unk="<unk>"):
     """
@@ -301,4 +300,5 @@ def replace_oovs(vocab, data, unk="<unk>"):
 
     return data_oovs_replaced
 
-assert_equal(replace_oovs({"a","b","c"}, [["a", "b"],["a","b","c","d"]]), [['a', 'b'], ['a', 'b', 'c', '<unk>']])
+#TODO
+# WRITE STH FOR LAST TASK
