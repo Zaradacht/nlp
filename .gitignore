@@ -1,0 +1,70 @@
+# ignore mac files 
+.DS_Store
+*.DS_Store
+
+# Ignore the following files in GIT #
+######################################
+
+# Ignore Jetbrains project folder   # 
+#########################
+*/.idea
+*\.idea
+
+# Ignore python files   # 
+#########################
+*/.*pycache*
+*\.*pycache*
+*/__pycache__
+*\__pycache__
+**/__pycache__/*
+*.pyc
+
+# Ignore python build files	#
+#############################
+
+*.so
+fmu/build
+
+# Ignore all logfiles	#
+#########################
+*.log
+*.log.*
+
+# Ignore vs files
+*/.vscode
+/.vscode
+\.vscode
+
+# Keine C# compiles
+*.exe
+
+# Ignore Juypter Notebook folder
+*/.ipynb_checkpoints
+/.ipynb_checkpoints
+\.ipynb_checkpoints
+
+# Ignore docker volumes
+*/volumes
+*\volumes
+
+# ignore tex
+*.aux
+latex/images
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.nlo
+*.out
+*.pdf
+*.run.xml
+*.synctex(busy)
+*.synctex.gz
+*.toc
