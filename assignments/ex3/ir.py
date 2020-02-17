@@ -35,7 +35,7 @@ from numpy.testing import assert_array_equal
 from nose.tools import assert_equal
 
 # CHECKING THE GENERAL PROPERTIES OF THE OUTPUT
-dummy_song_path = "dummy_song.txt"
+dummy_song_path = "ex3/dummy_song.txt"
 tokenize_and_normalize(dummy_song_path)
 
 ########################################################################################################################
@@ -467,8 +467,10 @@ def closest_n_documents(matrix_collection, matrix_queries, n):
         each element is a list of n idices of documents in matrix_collection that were closest to the query
     """
     # YOUR CODE HERE
-    results = np.array([[cosine(doc1, doc2) for doc2 in matrix_queries.T] for doc1 in matrix_collection.T])
-    best_cosines = results.argsort()[-n:][::-1]
+    best_cosines = []
+    for doc1 in matrix_queries.T:
+        res = np.array([cosine(doc1, doc2) for doc2 in matrix_collection.T])
+        best_cosines.append(list(res.argsort()[-n:][::-1]))
     return best_cosines
 
 
