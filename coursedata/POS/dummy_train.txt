@@ -1,0 +1,2 @@
+word1_/_TAG1 word2_/_TAG2
+word3_/_TAG3 word4_/_TAG4
