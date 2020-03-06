@@ -373,7 +373,7 @@ def create_tag_to_tag_transition_matrix(training_corpus, vocab_tags):
             w, t = el
             nxt = vocab_tags.index(t)
             tag_transition_matrix[cur, nxt] += 1
-            cur = nxt+1
+            cur = nxt + 1
         tag_transition_matrix[cur, -1] += 1
 
     return tag_transition_matrix.astype(int)
@@ -457,7 +457,7 @@ end_tag = df.index[np.argmax(df.END.values)]
 # type in the answer as an integer number.
 # For example:
 # n_of_non_final_tags = 15
-n_of_non_final_tags = np.sum(np.array(df.END.values, dtype='bool')==0)
+n_of_non_final_tags = np.sum(np.array(df.END.values, dtype='bool') == 0)
 
 # Remember to remove the raise NotImplementedError line:
 # YOUR CODE HERE
@@ -569,8 +569,8 @@ def accuracy(y_true, y_predicted):
     accuracy = []
     for stgt, spred in zip(y_true, y_predicted):
         for tgt, pred in zip(stgt, spred):
-            accuracy.append(tgt==pred)
-    accuracy = float(np.mean(accuracy))*100
+            accuracy.append(tgt == pred)
+    accuracy = float(np.mean(accuracy)) * 100
     return accuracy
 
 
@@ -650,9 +650,9 @@ def normalize_matrix(matrix, axis):
     # YOUR CODE HERE
     a = np.sum(matrix, axis=axis)
     if axis:
-        normalized_matrix = (matrix.T/a).T
+        normalized_matrix = (matrix.T / a).T
     else:
-        normalized_matrix = matrix/a
+        normalized_matrix = matrix / a
     return normalized_matrix
 
 
@@ -746,15 +746,15 @@ plot_confusion_matrix(cm_normalized, tags_vocab)
 # type in the right axis instead of None value to normalize word to tag matrix
 # For example:
 # axis_to_normalize_wt_matrix_by = 0
-axis_to_normalize_wt_matrix_by = None
+axis_to_normalize_wt_matrix_by = 0
 # type in the right axis instead of None value to normalize tag to tag matrix
 # For example:
 # axis_to_normalize_tt_matrix_by = 0
-axis_to_normalize_tt_matrix_by = None
+axis_to_normalize_tt_matrix_by = 1
 
 # Remember to remove the raise NotImplementedError line:
 # YOUR CODE HERE
-raise NotImplementedError()
+# TODO Not sure here
 
 # In[ ]:
 
@@ -863,21 +863,25 @@ def viterbi(A, B, word_sequence, tags_vocab, words_vocab):
 
     # FILL IN THE FIRST WORD'S COLUMN
     # YOUR CODE HERE
-    raise NotImplementedError()
+    if not len(word_sequence):
+        return []
+    if word_sequence[0] not in words_vocab:
+        path_probability_matrix[:, 0] = A[0, :-1]
+    else:
+        path_probability_matrix[:, 0] = B[words_vocab.index(word_sequence[0]), :] * A[0, :-1]
 
-    # FILL IN THE REST OF THE path_probability_matrix
-    # DON'T FORGET TO KEEP BACKPOINTERS
-    # YOUR CODE HERE
-    raise NotImplementedError()
-
-    # FIND THE LAST BACKPOINTER
-    # YOUR CODE HERE
-    raise NotImplementedError()
-
-    # BACKTRACE THE BEST PATH
+    for i in range(len(word_sequence) - 1):
+        tmp = np.multiply(A[1:, :-1].T, path_probability_matrix[:, i]).T
+        if word_sequence[i+1] not in words_vocab:
+            path_probability_matrix[:, i + 1] = np.max(tmp, axis=0)
+        else:
+            path_probability_matrix[:, i + 1] = np.max(tmp, axis=0)*B[words_vocab.index(word_sequence[i+1]), :]
+        backpointer_table[:, i] = np.argmax(tmp, axis=0)
+    p_out = path_probability_matrix[:, -1]*A[1:, -1]
+    backpointer_table[np.argmax(p_out), -1] = np.argmax(p_out)
     best_path = []
-    # YOUR CODE HERE
-    raise NotImplementedError()
+    for col in path_probability_matrix.T:
+        best_path.append(tags_vocab[np.argmax(col)])
 
     return best_path
 
