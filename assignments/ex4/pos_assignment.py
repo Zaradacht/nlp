@@ -934,4 +934,5 @@ plot_confusion_matrix(cm_hmm_normalized, tags_vocab)
 # ## 4.2
 # Briefly decribe in the cell below the differences in the performance of our HMM and the baseline model. What can be done to further improve the HMM model?
 
-# YOUR ANSWER HERE
+# The HMM method performs as expected better as the baseline model. This was to be expected as the HMM approach considers way more information
+# and therefore grammar to some limited extend. Furthermore is the handling of unknown word better.
